@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PersonnelDepartmentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="id_employee" />
+    </Key>
+    <Property Name="id_employee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="surname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="emp_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="birthday" Type="DateTime" Precision="0" />
+    <Property Name="job_title" Type="Int32" />
+    <NavigationProperty Name="JobTitle" Relationship="Self.FK__Employees__job_t__4AB81AF0" FromRole="Employees" ToRole="JobTitle" />
+    <NavigationProperty Name="EmploymentContracts" Relationship="Self.FK__Employmen__id_em__5070F446" FromRole="Employees" ToRole="EmploymentContract" />
+  </EntityType>
+  <EntityType Name="EmploymentContract">
+    <Key>
+      <PropertyRef Name="id_contract" />
+    </Key>
+    <Property Name="id_contract" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_office" Type="Int32" />
+    <Property Name="id_employee" Type="Int32" />
+    <Property Name="sign_date" Type="DateTime" Precision="0" />
+    <Property Name="end_date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK__Employmen__id_em__5070F446" FromRole="EmploymentContract" ToRole="Employees" />
+    <NavigationProperty Name="Office" Relationship="Self.FK__Employmen__id_of__4F7CD00D" FromRole="EmploymentContract" ToRole="Offices" />
+  </EntityType>
+  <EntityType Name="JobTitle">
+    <Key>
+      <PropertyRef Name="id_job_title" />
+    </Key>
+    <Property Name="id_job_title" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="job_title" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="salary" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK__Employees__job_t__4AB81AF0" FromRole="JobTitle" ToRole="Employees" />
+  </EntityType>
+  <EntityType Name="Office">
+    <Key>
+      <PropertyRef Name="id_office" />
+    </Key>
+    <Property Name="id_office" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="office_location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="location" Type="Geography" />
+    <NavigationProperty Name="EmploymentContracts" Relationship="Self.FK__Employmen__id_of__4F7CD00D" FromRole="Offices" ToRole="EmploymentContract" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK__Employees__job_t__4AB81AF0">
+    <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="0..1" />
+    <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JobTitle">
+        <PropertyRef Name="id_job_title" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="job_title" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employmen__id_em__5070F446">
+    <End Role="Employees" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="EmploymentContract" Type="Self.EmploymentContract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="id_employee" />
+      </Principal>
+      <Dependent Role="EmploymentContract">
+        <PropertyRef Name="id_employee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employmen__id_of__4F7CD00D">
+    <End Role="Offices" Type="Self.Office" Multiplicity="0..1" />
+    <End Role="EmploymentContract" Type="Self.EmploymentContract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Offices">
+        <PropertyRef Name="id_office" />
+      </Principal>
+      <Dependent Role="EmploymentContract">
+        <PropertyRef Name="id_office" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PersonnelDepartmentEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="EmploymentContracts" EntityType="Self.EmploymentContract" />
+    <EntitySet Name="JobTitles" EntityType="Self.JobTitle" />
+    <EntitySet Name="Offices" EntityType="Self.Office" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK__Employees__job_t__4AB81AF0" Association="Self.FK__Employees__job_t__4AB81AF0">
+      <End Role="JobTitle" EntitySet="JobTitles" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employmen__id_em__5070F446" Association="Self.FK__Employmen__id_em__5070F446">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="EmploymentContract" EntitySet="EmploymentContracts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employmen__id_of__4F7CD00D" Association="Self.FK__Employmen__id_of__4F7CD00D">
+      <End Role="Offices" EntitySet="Offices" />
+      <End Role="EmploymentContract" EntitySet="EmploymentContracts" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

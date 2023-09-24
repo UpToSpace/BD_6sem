@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="rentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="apartments">
+    <Key>
+      <PropertyRef Name="apartment_id" />
+    </Key>
+    <Property Name="apartment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="street" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="house_number" Type="Int32" />
+    <Property Name="room_number" Type="Int32" />
+    <Property Name="day_cost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="location" Type="Geography" />
+    <NavigationProperty Name="rents" Relationship="Self.FK__rents__apartment__286302EC" FromRole="apartments" ToRole="rents" />
+  </EntityType>
+  <EntityType Name="bill_details">
+    <Key>
+      <PropertyRef Name="bill_id" />
+    </Key>
+    <Property Name="bill_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="rent_id" Type="Int32" />
+    <Property Name="bill_date" Type="DateTime" Precision="0" />
+    <Property Name="total" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="rents" Relationship="Self.FK__bill_deta__rent___2C3393D0" FromRole="bill_details" ToRole="rents" />
+  </EntityType>
+  <EntityType Name="clients">
+    <Key>
+      <PropertyRef Name="passport_number" />
+    </Key>
+    <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="passport_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="rents" Relationship="Self.FK__rents__client_pa__29572725" FromRole="clients" ToRole="rents" />
+  </EntityType>
+  <EntityType Name="rents">
+    <Key>
+      <PropertyRef Name="rent_id" />
+    </Key>
+    <Property Name="rent_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="apartment_id" Type="Int32" />
+    <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="date_begin" Type="DateTime" Precision="0" />
+    <Property Name="date_end" Type="DateTime" Precision="0" />
+    <Property Name="client_passport_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="apartments" Relationship="Self.FK__rents__apartment__286302EC" FromRole="rents" ToRole="apartments" />
+    <NavigationProperty Name="bill_details" Relationship="Self.FK__bill_deta__rent___2C3393D0" FromRole="rents" ToRole="bill_details" />
+    <NavigationProperty Name="clients" Relationship="Self.FK__rents__client_pa__29572725" FromRole="rents" ToRole="clients" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK__rents__apartment__286302EC">
+    <End Role="apartments" Type="Self.apartments" Multiplicity="0..1" />
+    <End Role="rents" Type="Self.rents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="apartments">
+        <PropertyRef Name="apartment_id" />
+      </Principal>
+      <Dependent Role="rents">
+        <PropertyRef Name="apartment_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__bill_deta__rent___2C3393D0">
+    <End Role="rents" Type="Self.rents" Multiplicity="0..1" />
+    <End Role="bill_details" Type="Self.bill_details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="rents">
+        <PropertyRef Name="rent_id" />
+      </Principal>
+      <Dependent Role="bill_details">
+        <PropertyRef Name="rent_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__rents__client_pa__29572725">
+    <End Role="clients" Type="Self.clients" Multiplicity="0..1" />
+    <End Role="rents" Type="Self.rents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clients">
+        <PropertyRef Name="passport_number" />
+      </Principal>
+      <Dependent Role="rents">
+        <PropertyRef Name="client_passport_number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="rentEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="apartments" EntityType="Self.apartments" />
+    <EntitySet Name="bill_details" EntityType="Self.bill_details" />
+    <EntitySet Name="clients" EntityType="Self.clients" />
+    <EntitySet Name="rents" EntityType="Self.rents" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="FK__rents__apartment__286302EC" Association="Self.FK__rents__apartment__286302EC">
+      <End Role="apartments" EntitySet="apartments" />
+      <End Role="rents" EntitySet="rents" />
+    </AssociationSet>
+    <AssociationSet Name="FK__bill_deta__rent___2C3393D0" Association="Self.FK__bill_deta__rent___2C3393D0">
+      <End Role="rents" EntitySet="rents" />
+      <End Role="bill_details" EntitySet="bill_details" />
+    </AssociationSet>
+    <AssociationSet Name="FK__rents__client_pa__29572725" Association="Self.FK__rents__client_pa__29572725">
+      <End Role="clients" EntitySet="clients" />
+      <End Role="rents" EntitySet="rents" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

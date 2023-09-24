@@ -1,0 +1,17 @@
+D:\University\бд\labs\lab10\sqlite\sqlite\bin\Debug\sqlite.exe.config
+D:\University\бд\labs\lab10\sqlite\sqlite\bin\Debug\sqlite.exe
+D:\University\бд\labs\lab10\sqlite\sqlite\bin\Debug\sqlite.pdb
+D:\University\бд\labs\lab10\sqlite\sqlite\bin\Debug\EntityFramework.dll
+D:\University\бд\labs\lab10\sqlite\sqlite\bin\Debug\EntityFramework.SqlServer.dll
+D:\University\бд\labs\lab10\sqlite\sqlite\bin\Debug\System.Data.SQLite.dll
+D:\University\бд\labs\lab10\sqlite\sqlite\bin\Debug\System.Data.SQLite.EF6.dll
+D:\University\бд\labs\lab10\sqlite\sqlite\bin\Debug\System.Data.SQLite.Linq.dll
+D:\University\бд\labs\lab10\sqlite\sqlite\bin\Debug\EntityFramework.xml
+D:\University\бд\labs\lab10\sqlite\sqlite\bin\Debug\EntityFramework.SqlServer.xml
+D:\University\бд\labs\lab10\sqlite\sqlite\bin\Debug\System.Data.SQLite.xml
+D:\University\бд\labs\lab10\sqlite\sqlite\obj\Debug\sqlite.csproj.AssemblyReference.cache
+D:\University\бд\labs\lab10\sqlite\sqlite\obj\Debug\sqlite.csproj.SuggestedBindingRedirects.cache
+D:\University\бд\labs\lab10\sqlite\sqlite\obj\Debug\sqlite.csproj.CoreCompileInputs.cache
+D:\University\бд\labs\lab10\sqlite\sqlite\obj\Debug\sqlite.csproj.CopyComplete
+D:\University\бд\labs\lab10\sqlite\sqlite\obj\Debug\sqlite.exe
+D:\University\бд\labs\lab10\sqlite\sqlite\obj\Debug\sqlite.pdb

@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="rentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="apartment">
+    <Key>
+      <PropertyRef Name="apartment_id" />
+    </Key>
+    <Property Name="apartment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="street" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="house_number" Type="Int32" />
+    <Property Name="room_number" Type="Int32" />
+    <Property Name="day_cost" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="rents" Relationship="Self.FK__rents__apartment__286302EC" FromRole="apartments" ToRole="rents" />
+  </EntityType>
+  <EntityType Name="bill_details">
+    <Key>
+      <PropertyRef Name="bill_id" />
+    </Key>
+    <Property Name="bill_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="rent_id" Type="Int32" />
+    <Property Name="bill_date" Type="DateTime" Precision="0" />
+    <Property Name="total" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="rent" Relationship="Self.FK__bill_deta__rent___2C3393D0" FromRole="bill_details" ToRole="rents" />
+  </EntityType>
+  <EntityType Name="client">
+    <Key>
+      <PropertyRef Name="passport_number" />
+    </Key>
+    <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="passport_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="rents" Relationship="Self.FK__rents__client_pa__29572725" FromRole="clients" ToRole="rents" />
+  </EntityType>
+  <EntityType Name="rent">
+    <Key>
+      <PropertyRef Name="rent_id" />
+    </Key>
+    <Property Name="rent_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="apartment_id" Type="Int32" />
+    <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="date_begin" Type="DateTime" Precision="0" />
+    <Property Name="date_end" Type="DateTime" Precision="0" />
+    <Property Name="client_passport_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="apartment" Relationship="Self.FK__rents__apartment__286302EC" FromRole="rents" ToRole="apartments" />
+    <NavigationProperty Name="bill_details" Relationship="Self.FK__bill_deta__rent___2C3393D0" FromRole="rents" ToRole="bill_details" />
+    <NavigationProperty Name="client" Relationship="Self.FK__rents__client_pa__29572725" FromRole="rents" ToRole="clients" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="bills_with_apartments">
+    <Key>
+      <PropertyRef Name="bill_id" />
+    </Key>
+    <Property Name="bill_id" Type="Int32" Nullable="false" />
+    <Property Name="bill_date" Type="DateTime" Precision="0" />
+    <Property Name="total" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="street" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="house_number" Type="Int32" />
+    <Property Name="room_number" Type="Int32" />
+  </EntityType>
+  <EntityType Name="rents_with_apartments">
+    <Key>
+      <PropertyRef Name="rent_id" />
+    </Key>
+    <Property Name="client_passport_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="rent_id" Type="Int32" Nullable="false" />
+    <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="street" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="house_number" Type="Int32" />
+    <Property Name="room_number" Type="Int32" />
+    <Property Name="day_cost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="date_begin" Type="DateTime" Precision="0" />
+    <Property Name="date_end" Type="DateTime" Precision="0" />
+  </EntityType>
+  <Association Name="FK__rents__apartment__286302EC">
+    <End Role="apartments" Type="Self.apartment" Multiplicity="0..1" />
+    <End Role="rents" Type="Self.rent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="apartments">
+        <PropertyRef Name="apartment_id" />
+      </Principal>
+      <Dependent Role="rents">
+        <PropertyRef Name="apartment_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__bill_deta__rent___2C3393D0">
+    <End Role="rents" Type="Self.rent" Multiplicity="0..1" />
+    <End Role="bill_details" Type="Self.bill_details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="rents">
+        <PropertyRef Name="rent_id" />
+      </Principal>
+      <Dependent Role="bill_details">
+        <PropertyRef Name="rent_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__rents__client_pa__29572725">
+    <End Role="clients" Type="Self.client" Multiplicity="0..1" />
+    <End Role="rents" Type="Self.rent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clients">
+        <PropertyRef Name="passport_number" />
+      </Principal>
+      <Dependent Role="rents">
+        <PropertyRef Name="client_passport_number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="rentEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="apartments" EntityType="Self.apartment" />
+    <EntitySet Name="bill_details" EntityType="Self.bill_details" />
+    <EntitySet Name="clients" EntityType="Self.client" />
+    <EntitySet Name="rents" EntityType="Self.rent" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="bills_with_apartments" EntityType="Self.bills_with_apartments" />
+    <EntitySet Name="rents_with_apartments" EntityType="Self.rents_with_apartments" />
+    <AssociationSet Name="FK__rents__apartment__286302EC" Association="Self.FK__rents__apartment__286302EC">
+      <End Role="apartments" EntitySet="apartments" />
+      <End Role="rents" EntitySet="rents" />
+    </AssociationSet>
+    <AssociationSet Name="FK__bill_deta__rent___2C3393D0" Association="Self.FK__bill_deta__rent___2C3393D0">
+      <End Role="rents" EntitySet="rents" />
+      <End Role="bill_details" EntitySet="bill_details" />
+    </AssociationSet>
+    <AssociationSet Name="FK__rents__client_pa__29572725" Association="Self.FK__rents__client_pa__29572725">
+      <End Role="clients" EntitySet="clients" />
+      <End Role="rents" EntitySet="rents" />
+    </AssociationSet>
+    <FunctionImport Name="pay_for_apartment">
+      <Parameter Name="rent_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="register_apartment">
+      <Parameter Name="city" Mode="In" Type="String" />
+      <Parameter Name="street" Mode="In" Type="String" />
+      <Parameter Name="house_number" Mode="In" Type="Int32" />
+      <Parameter Name="room_number" Mode="In" Type="Int32" />
+      <Parameter Name="day_cost" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="register_client">
+      <Parameter Name="surname" Mode="In" Type="String" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="passport_number" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="rent_apartment">
+      <Parameter Name="apartment_id" Mode="In" Type="Int32" />
+      <Parameter Name="date_begin" Mode="In" Type="DateTime" />
+      <Parameter Name="date_end" Mode="In" Type="DateTime" />
+      <Parameter Name="client_passport_number" Mode="In" Type="String" />
+      <Parameter Name="type" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(rentModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(rentModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

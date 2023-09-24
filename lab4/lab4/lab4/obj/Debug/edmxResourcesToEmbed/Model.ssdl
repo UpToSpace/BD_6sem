@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PersonnelDepartmentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="id_employee" />
+    </Key>
+    <Property Name="id_employee" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="surname" Type="nvarchar" MaxLength="30" />
+    <Property Name="emp_name" Type="nvarchar" MaxLength="30" />
+    <Property Name="birthday" Type="date" />
+    <Property Name="job_title" Type="int" />
+  </EntityType>
+  <EntityType Name="EmploymentContract">
+    <Key>
+      <PropertyRef Name="id_contract" />
+    </Key>
+    <Property Name="id_contract" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_office" Type="int" />
+    <Property Name="id_employee" Type="int" />
+    <Property Name="sign_date" Type="date" />
+    <Property Name="end_date" Type="date" />
+  </EntityType>
+  <EntityType Name="JobTitle">
+    <Key>
+      <PropertyRef Name="id_job_title" />
+    </Key>
+    <Property Name="id_job_title" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="job_title" Type="nvarchar" MaxLength="20" />
+    <Property Name="salary" Type="money" />
+  </EntityType>
+  <EntityType Name="Offices">
+    <Key>
+      <PropertyRef Name="id_office" />
+    </Key>
+    <Property Name="id_office" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="office_location" Type="nvarchar" MaxLength="50" />
+    <Property Name="location" Type="geography" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK__Employees__job_t__4AB81AF0">
+    <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="0..1" />
+    <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JobTitle">
+        <PropertyRef Name="id_job_title" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="job_title" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employmen__id_em__5070F446">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+    <End Role="EmploymentContract" Type="Self.EmploymentContract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="id_employee" />
+      </Principal>
+      <Dependent Role="EmploymentContract">
+        <PropertyRef Name="id_employee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employmen__id_of__4F7CD00D">
+    <End Role="Offices" Type="Self.Offices" Multiplicity="0..1" />
+    <End Role="EmploymentContract" Type="Self.EmploymentContract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Offices">
+        <PropertyRef Name="id_office" />
+      </Principal>
+      <Dependent Role="EmploymentContract">
+        <PropertyRef Name="id_office" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PersonnelDepartmentModelStoreContainer">
+    <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmploymentContract" EntityType="Self.EmploymentContract" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JobTitle" EntityType="Self.JobTitle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Offices" EntityType="Self.Offices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Employees__job_t__4AB81AF0" Association="Self.FK__Employees__job_t__4AB81AF0">
+      <End Role="JobTitle" EntitySet="JobTitle" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employmen__id_em__5070F446" Association="Self.FK__Employmen__id_em__5070F446">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="EmploymentContract" EntitySet="EmploymentContract" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employmen__id_of__4F7CD00D" Association="Self.FK__Employmen__id_of__4F7CD00D">
+      <End Role="Offices" EntitySet="Offices" />
+      <End Role="EmploymentContract" EntitySet="EmploymentContract" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

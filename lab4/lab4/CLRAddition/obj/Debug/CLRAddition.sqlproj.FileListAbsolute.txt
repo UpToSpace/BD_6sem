@@ -1,0 +1,6 @@
+D:\вуз\6sem\DB\PersonnelDepartment\CLRAddition\bin\Debug\CLRAddition.dacpac
+D:\вуз\6sem\DB\PersonnelDepartment\CLRAddition\obj\Debug\CLRAddition.sqlproj.AssemblyReference.cache
+D:\вуз\6sem\DB\PersonnelDepartment\CLRAddition\obj\Debug\CLRAddition.dll
+D:\вуз\6sem\DB\PersonnelDepartment\CLRAddition\obj\Debug\CLRAddition.pdb
+D:\вуз\6sem\DB\PersonnelDepartment\CLRAddition\bin\Debug\CLRAddition.dll
+D:\вуз\6sem\DB\PersonnelDepartment\CLRAddition\bin\Debug\CLRAddition.pdb
